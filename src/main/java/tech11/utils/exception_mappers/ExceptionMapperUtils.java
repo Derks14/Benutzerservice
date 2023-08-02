@@ -7,7 +7,7 @@ import tech11.utils.request.ErrorResponse;
 import java.time.LocalDateTime;
 
 public class ExceptionMapperUtils {
-    static protected Response buildErrorMessage(Throwable exception) {
+    static protected Response buildErrorMessage(Throwable exception, Response.Status status) {
 
         Class<? extends Throwable> error = exception.getClass();
 
@@ -15,10 +15,10 @@ public class ExceptionMapperUtils {
                 .message(exception.getMessage())
                 .timestamp(LocalDateTime.now())
                 .error(error.getName())
-                .status(Response.Status.BAD_REQUEST.getStatusCode())
+                .status(status.getStatusCode())
                 .build();
 
-        return Response.status(Response.Status.BAD_REQUEST)
+        return Response.status(status)
                 .entity(errorResponse)
                 .type(MediaType.APPLICATION_JSON)
                 .build();

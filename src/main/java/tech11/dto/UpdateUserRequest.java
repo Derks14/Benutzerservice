@@ -14,6 +14,7 @@ public record UpdateUserRequest(
         @NotBlank(message = "You did not provide user's lastname")
         String lastname,
 
+        @NotBlank(message = "You did not provide user's phone number")
         String phone
 ) {
 }

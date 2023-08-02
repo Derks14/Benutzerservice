@@ -11,6 +11,6 @@ public class BadRequestExceptionMapper implements ExceptionMapper<BadRequestExce
 
     @Override
     public Response toResponse(BadRequestException ex) {
-        return ExceptionMapperUtils.buildErrorMessage(ex);
+        return ExceptionMapperUtils.buildErrorMessage(ex, Response.Status.BAD_REQUEST);
     }
 }

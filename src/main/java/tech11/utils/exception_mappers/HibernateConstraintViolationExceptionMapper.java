@@ -1,16 +1,15 @@
 package tech11.utils.exception_mappers;
 
-import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
-import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 
 @Provider
-@Slf4j
-public class InternalServerErrorExceptionMapper implements ExceptionMapper<InternalServerErrorException> {
+public class HibernateConstraintViolationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
+
     @Override
-    public Response toResponse(InternalServerErrorException exception) {
+    public Response toResponse(ConstraintViolationException exception) {
         return ExceptionMapperUtils.buildErrorMessage(exception, Response.Status.INTERNAL_SERVER_ERROR);
     }
 }

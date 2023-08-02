@@ -5,7 +5,6 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Builder
-@AllArgsConstructor
 @RequiredArgsConstructor
 @Value
 public class ErrorResponse {

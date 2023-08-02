@@ -9,6 +9,6 @@ import jakarta.ws.rs.ext.Provider;
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
     @Override
     public Response toResponse(NotFoundException exception) {
-        return ExceptionMapperUtils.buildErrorMessage(exception);
+        return ExceptionMapperUtils.buildErrorMessage(exception, Response.Status.NOT_FOUND);
     }
 }

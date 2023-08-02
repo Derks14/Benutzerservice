@@ -52,6 +52,7 @@ public class User {
 
     @PrePersist
     public void updateCreated() {
+        this.modified = LocalDateTime.now();
         this.created = LocalDateTime.now();
     }
 

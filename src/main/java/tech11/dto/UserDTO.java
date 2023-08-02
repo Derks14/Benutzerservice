@@ -1,10 +1,21 @@
 package tech11.dto;
 
-public record UserDTO(
-        String firstname,
-        String lastname,
-        String email,
-        String birthday,
-        String phone
-) {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserDTO{
+    long id;
+    String firstname;
+    String lastname;
+    String email;
+    String birthday;
+    String phone;
+    LocalDateTime created;
+    LocalDateTime modified;
 }
