@@ -5,16 +5,19 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Value;
 
-// todo remember to validate the dateofbirth in a simple function during the conversion of string to date
-public record UpdateUserRequest(
+@Value
+@AllArgsConstructor
+public class UpdateUserRequest {
         @NotBlank(message = "You did not provide user's firstname")
-        String firstname,
+        String firstname;
 
         @NotBlank(message = "You did not provide user's lastname")
-        String lastname,
+        String lastname;
 
         @NotBlank(message = "You did not provide user's phone number")
-        String phone
-) {
+        String phone;
 }

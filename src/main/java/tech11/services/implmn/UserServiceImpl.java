@@ -28,6 +28,7 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @ApplicationScoped
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
         List<UserDTO> userDTOS = users.stream()
                 .map( user -> modelMapper.map(user, UserDTO.class))
-                .toList();
+                        .collect(Collectors.toList());
         log.info("Mapped fetched users to a presentable form ");
 
         ApiResponse<List<UserDTO>> response = ApiResponse.<List<UserDTO>>builder()
@@ -70,25 +71,25 @@ public class UserServiceImpl implements UserService {
     public UserDTO addUser(AddUserRequest addUserRequest) throws JDBCException {
         try {
             User user = User.builder()
-                    .email(addUserRequest.email())
-                    .lastname(addUserRequest.lastname())
-                    .firstname(addUserRequest.firstname())
-                    .phone(addUserRequest.phone())
+                    .email(addUserRequest.getEmail())
+                    .lastname(addUserRequest.getLastname())
+                    .firstname(addUserRequest.getFirstname())
+                    .phone(addUserRequest.getPhone())
                     .build();
 
             // todo add format to application.properties file
 
-            repository.findByUsername(addUserRequest.username()).ifPresent( user1 -> {
+            repository.findByUsername(addUserRequest.getUsername()).ifPresent( user1 -> {
                 throw new BadRequestException("User already exists");
             });
 
-            repository.findByEmail(addUserRequest.email()).ifPresent( user1 -> {
+            repository.findByEmail(addUserRequest.getEmail()).ifPresent( user1 -> {
                 throw new BadRequestException("User already exists");
             });
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-            LocalDate dob = LocalDate.parse(addUserRequest.dateOfBirth(), formatter);
+            LocalDate dob = LocalDate.parse(addUserRequest.getDateOfBirth(), formatter);
 
             boolean isFuture = dob.isAfter(LocalDate.now());
             if (isFuture) throw new BadRequestException("You provided a future date");
@@ -98,10 +99,10 @@ public class UserServiceImpl implements UserService {
 
             // the test mentioned nothing about hashing password so I took the liberty of implementing a
             // simple hashing with Java as it was stated to use only jakarta provided dependencies
-            String hashedPassword = PasswordUtils.hashPassword(addUserRequest.password());
+            String hashedPassword = PasswordUtils.hashPassword(addUserRequest.getPassword());
             user.setPassword(hashedPassword);
 
-            user.setUsername(addUserRequest.username());
+            user.setUsername(addUserRequest.getUsername());
 
             repository.persist(user);
 
@@ -139,9 +140,9 @@ public class UserServiceImpl implements UserService {
         log.info("Requested User successfully retrieved [user={}]", user.toString());
 
         try {
-            user.setFirstname(requestData.firstname());
-            user.setLastname(requestData.lastname());
-            user.setPhone(requestData.phone());
+            user.setFirstname(requestData.getFirstname());
+            user.setLastname(requestData.getLastname());
+            user.setPhone(requestData.getPhone());
             repository.persist(user);
             log.info("User modified successfully [id={}, user={}]", id, user);
 
