@@ -77,7 +77,6 @@ public class UserServiceImpl implements UserService {
                     .phone(addUserRequest.getPhone())
                     .build();
 
-            // todo add format to application.properties file
 
             repository.findByUsername(addUserRequest.getUsername()).ifPresent( user1 -> {
                 throw new BadRequestException("User already exists");
