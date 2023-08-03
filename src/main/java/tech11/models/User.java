@@ -14,16 +14,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "users")
+@Table(name = "users", indexes = {
+        @Index(name = "username_index", columnList = "username", unique = true),
+        @Index(name = "email_index", columnList = "email", unique = true)
+})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column( name = "username", nullable = false, updatable = false, unique = true)
+    @Column( name = "username", nullable = false, updatable = false)
     private String username;
 
-    @Column( name = "email", nullable = false, updatable = false, unique = true)
+    @Column( name = "email", nullable = false, updatable = false)
     private String email;
 
     @Column(name= "firstname", nullable = false)
@@ -61,6 +64,3 @@ public class User {
         this.modified = LocalDateTime.now();
     }
 }
-
-
-//todo abstract this class into a base entity
