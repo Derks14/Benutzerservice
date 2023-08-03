@@ -13,6 +13,7 @@ public class UserDTO implements Serializable {
     String id;
     String firstname;
     String lastname;
+    String username;
     String email;
     String birthday;
     String phone;

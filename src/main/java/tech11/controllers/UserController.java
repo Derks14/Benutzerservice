@@ -57,6 +57,18 @@ public class UserController {
         return response;
     }
 
+    @GET
+    @Path("username/{username}")
+    @Operation(summary = "Retrieve single user by username")
+    public ApiResponse<UserDTO> getByUsername(@PathParam("username") String username) {
+        log.info("Request to fetch single user by username [username={}]", username);
+        UserDTO userDTO = userService.fetchSingleUserByUsername(username);
+        return  ApiResponse.<UserDTO>builder()
+                .data(userDTO)
+                .message("User Retrieved Successfully").status(Response.Status.OK.name())
+                .build();
+    }
+
     @PUT
     @Path("{id}")
     @Operation(summary = "Modify single user with id ")

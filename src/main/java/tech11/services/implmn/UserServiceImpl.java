@@ -131,6 +131,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO fetchSingleUserByUsername(String username) {
+        User user = repository.findByUsername(username)
+                .orElseThrow( () -> {
+                    log.error("Requested User with Username not found [username={}]", username);
+                    return new NotFoundException("We Cannot Find Requested User");
+                });
+        log.info("Requested User successfully retrieved [user={}]", user.toString());
+        return modelMapper.map(user, UserDTO.class);
+    }
+
+    @Override
     public UserDTO modifyUser(String id, UpdateUserRequest requestData) {
         User user = repository.findByIdOptional(id)
                 .orElseThrow( () -> {

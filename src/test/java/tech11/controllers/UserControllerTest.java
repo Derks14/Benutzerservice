@@ -124,6 +124,31 @@ public class UserControllerTest {
     }
 
     @Test
+    @DisplayName("Retrieve User With Username")
+    void getByUsername() throws Exception {
+        given()
+                .pathParam("username", testUser.getUsername())
+            .when()
+                .get(ENDPOINT + "/username/{username}")
+            .then()
+                .statusCode(200)
+                .body("data", notNullValue());
+    }
+
+    @Test
+    @DisplayName("Retrieve User With Random Username (Anomalous)")
+    void getUnavailableUserByUsername() throws Exception {
+        given()
+                .pathParam("username", "bruno8")
+            .when()
+                .get(ENDPOINT + "/username/{username}")
+            .then()
+                .statusCode(404)
+                .body("message", is("We Cannot Find Requested User"));
+    }
+
+
+    @Test
     @DisplayName("Modify User")
     void modifyUser() throws Exception {
         UpdateUserRequest updateUserRequest = new UpdateUserRequest("Gerd", "Muller", "0248801964");
