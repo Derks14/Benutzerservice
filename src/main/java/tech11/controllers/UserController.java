@@ -15,7 +15,7 @@ import tech11.utils.request.ApiResponse;
 
 import java.util.List;
 
-@Path("/users")
+@Path("/api/users")
 @Slf4j
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -49,7 +49,7 @@ public class UserController {
     @Operation(summary = "Retrieve single user with id")
     public ApiResponse<UserDTO> getUser(@PathParam("id") String id) {
         log.info("Request to fetch single user [userId={}]", id);
-        UserDTO userDTO = userService.fetchSingleUser(Long.parseLong(id));
+        UserDTO userDTO = userService.fetchSingleUser(id);
         ApiResponse<UserDTO> response = ApiResponse.<UserDTO>builder()
                 .data(userDTO)
                 .message("User Retrieved Successfully").status(Response.Status.OK.name())
@@ -60,7 +60,7 @@ public class UserController {
     @PUT
     @Path("{id}")
     @Operation(summary = "Modify single user with id ")
-    public ApiResponse<UserDTO> modifyUser(@PathParam("id") long id, @Valid UpdateUserRequest updateUserRequest) {
+    public ApiResponse<UserDTO> modifyUser(@PathParam("id") String id, @Valid UpdateUserRequest updateUserRequest) {
         log.info("Request to modify user [userId={}]", id);
         UserDTO userDTO = userService.modifyUser(id, updateUserRequest);
         return ApiResponse.<UserDTO>builder()
@@ -73,7 +73,7 @@ public class UserController {
     @DELETE
     @Path("{id}")
     @Operation(summary = "Delete single user from id")
-    public ApiResponse<UserDTO> deleteUser(@PathParam("id") long id) {
+    public ApiResponse<UserDTO> deleteUser(@PathParam("id") String id) {
         log.info("Request to delete user [userId={}]", id);
         UserDTO userDTO = userService.deleteUser(id);
         return ApiResponse.<UserDTO>builder()

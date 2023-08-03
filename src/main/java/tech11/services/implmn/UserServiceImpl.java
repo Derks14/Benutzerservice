@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO fetchSingleUser(long id) {
+    public UserDTO fetchSingleUser(String id) {
         User user = repository.findByIdOptional(id)
                 .orElseThrow( () -> {
                     log.error("Requested User with ID not found [id={}]", id);
@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO modifyUser(long id, UpdateUserRequest requestData) {
+    public UserDTO modifyUser(String id, UpdateUserRequest requestData) {
         User user = repository.findByIdOptional(id)
                 .orElseThrow( () -> {
                     log.error("Requested User with ID not found [id={}]", id);
@@ -153,7 +153,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO deleteUser(long id) {
+    public UserDTO deleteUser(String id) {
         User user = repository.findByIdOptional(id)
                 .orElseThrow( () -> {
                     log.error("Requested User with ID not found [id={}]", id);

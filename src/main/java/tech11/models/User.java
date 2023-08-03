@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     @Column( name = "username", nullable = false, updatable = false, unique = true)
     private String username;

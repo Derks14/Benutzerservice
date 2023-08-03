@@ -13,9 +13,9 @@ public interface UserService {
 
     UserDTO addUser(AddUserRequest addUserRequest);
 
-    UserDTO fetchSingleUser(long id);
+    UserDTO fetchSingleUser(String id);
 
-    UserDTO modifyUser(long id, UpdateUserRequest request);
+    UserDTO modifyUser(String id, UpdateUserRequest request);
 
-    UserDTO deleteUser(long id);
+    UserDTO deleteUser(String id);
 }
